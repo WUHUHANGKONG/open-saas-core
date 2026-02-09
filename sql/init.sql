@@ -35,3 +35,24 @@ CREATE TABLE IF NOT EXISTS product (
     create_time TIMESTAMP,
     update_time TIMESTAMP
     );
+
+-- ----------------------------
+-- 4. 交通传感器数据表 (核心业务表)
+-- ----------------------------
+CREATE TABLE traffic_sensor_data (
+                                     id BIGSERIAL PRIMARY KEY,
+                                     sensor_id VARCHAR(50) NOT NULL,   -- 传感器/设备编号 (例如: "CAM-001")
+                                     location VARCHAR(100),            -- 安装位置 (例如: "中山路-解放路路口")
+                                     flow_rate INT,                    -- 当前车流量 (辆/小时)
+                                     avg_speed DECIMAL(5, 2),          -- 平均车速 (km/h)
+                                     congestion_level INT,             -- 拥堵指数 (1:畅通, 2:缓行, 3:拥堵, 4:严重拥堵)
+
+    -- 核心：租户隔离 (不同城市的数据互不可见)
+                                     tenant_id VARCHAR(50) NOT NULL,
+                                     create_time TIMESTAMP,
+                                     update_time TIMESTAMP
+);
+
+-- 插入几条测试数据
+INSERT INTO traffic_sensor_data (sensor_id, location, flow_rate, avg_speed, congestion_level, tenant_id, create_time)
+VALUES ('CAM-BJ-001', '长安街东口', 1200, 45.5, 2, '1', NOW()); -- 假设 1 是北京

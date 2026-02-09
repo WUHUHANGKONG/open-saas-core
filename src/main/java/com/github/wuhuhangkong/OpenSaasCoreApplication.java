@@ -6,11 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-// 强制扫描这两个核心包路径，防止因为层级问题漏掉 Controller
-@ComponentScan(basePackages = {
-        "com.github.wuhuhangkong.interfaces",
-        "com.github.wuhuhangkong.infrastructure"
-})
+// ✅ 修正：直接扫描整个项目根路径，包含了 common, infrastructure, interfaces 等所有子包
+@ComponentScan("com.github.wuhuhangkong")
 @MapperScan("com.github.wuhuhangkong.infrastructure.persistence.mapper")
 public class OpenSaasCoreApplication {
 
