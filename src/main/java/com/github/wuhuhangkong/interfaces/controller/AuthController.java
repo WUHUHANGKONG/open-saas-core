@@ -5,10 +5,13 @@ import com.github.wuhuhangkong.infrastructure.persistence.entity.SysUser;
 import com.github.wuhuhangkong.infrastructure.persistence.mapper.SysUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Tag(name = "2. 认证中心", description = "用户登录与Token获取")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -16,8 +19,9 @@ public class AuthController {
     @Autowired
     private SysUserMapper sysUserMapper;
 
+    @Operation(summary = "用户登录", description = "需要携带 Tenant-ID 才能登录")
     @PostMapping("/login")
-    public Map<String, Object> login(@RequestBody Map<String, String> params) {
+    public Map<String, Object> login(@RequestBody Map<String, String> params){
         String username = params.get("username");
         String password = params.get("password");
 

@@ -65,10 +65,22 @@ CREATE TABLE product (
     create_time TIMESTAMP,
     update_time TIMESTAMP
 );
+```
+
 ### 3. 运行项目
 修改 application.properties 中的数据库连接信息，然后运行 OpenSaasCoreApplication
 
 ## 🔌 API 接口文档
+
+本项目集成了 **Knife4j** (基于 Swagger 3)，提供可视化的在线 API 文档与调试界面。
+
+![API文档在线调试](docs/images/api-doc-demo.png)
+
+> 启动项目后，访问：`http://localhost:8080/doc.html` 即可进入在线文档。
+
+### 核心接口预览（手动测试指南）
+
+如果你不方便运行 Docker 或前端，也可以使用 Postman 调用以下核心接口：
 
 ### 1. 租户管理
 * **注册新租户**

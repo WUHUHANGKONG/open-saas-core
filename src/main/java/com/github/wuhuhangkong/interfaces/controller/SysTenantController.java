@@ -4,10 +4,13 @@ import com.github.wuhuhangkong.infrastructure.persistence.entity.SysTenant;
 import com.github.wuhuhangkong.infrastructure.persistence.mapper.SysTenantMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.Operation; // 导入这个
+import io.swagger.v3.oas.annotations.tags.Tag;    // 导入这个
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Tag(name = "1. 租户管理", description = "企业的注册、审核与管理") // ✨ 整个类的标签
 @RestController
 @RequestMapping("/api/tenants")
 public class SysTenantController {
@@ -19,8 +22,9 @@ public class SysTenantController {
      * 注册新租户接口
      * 请求体示例：{"name": "字节跳动"}
      */
+    @Operation(summary = "注册新租户", description = "无需登录，直接注册一个新的公司") // ✨ 接口说明
     @PostMapping("/register")
-    public Map<String, Object> register(@RequestBody Map<String, String> params) {
+    public Map<String, Object> register(@RequestBody Map<String, String> params){
         String name = params.get("name");
 
         // 1. 简单的校验
