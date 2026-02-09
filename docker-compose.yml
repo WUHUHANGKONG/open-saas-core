@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # --- 服务1: 数据库 ---
+  saas-db:
+    image: postgres:15
+    container_name: saas-db
+    environment:
+      POSTGRES_DB: saas_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5434:5432" # ⚠️注意：这里把容器内的5432映射到宿主机的5434，防止和你本地的5433/5432冲突
+    volumes:
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql # 自动初始化表结构
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - saas-net
+
+  # --- 服务2: Java后端 ---
+  saas-app:
+    build: .
+    container_name: saas-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - saas-db
+    environment:
+      # 关键：这里用 saas-db 代替 localhost，Docker 内部会自动解析
+      SPRING_DATASOURCE_URL: jdbc:postgresql://saas-db:5432/saas_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password
+    networks:
+      - saas-net
+
+volumes:
+  postgres_data:
+
+networks:
+  saas-net:

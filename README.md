@@ -26,6 +26,24 @@ Open SaaS Core 是一个开箱即用的 SaaS 后端基础设施。它旨在解�
 
 ## 🚀 快速开始
 
+
+### 🐳 方式一：Docker 一键启动 (推荐)
+无需安装 Java 或 PostgreSQL，直接运行：
+
+```bash
+# 1. 编译打包
+./mvnw clean package -DskipTests
+
+# 2. 启动服务
+docker-compose up -d
+```
+启动成功后，即可访问：
+
+📄 在线接口文档 (Knife4j): http://localhost:8080/doc.html
+
+🛢️ 数据库端口: localhost:5434 (默认账号: postgres / 密码: password)
+
+### ☕️ 方式二：本地开发运行
 ### 1. 环境准备
 确保本地已安装：
 * JDK 21
