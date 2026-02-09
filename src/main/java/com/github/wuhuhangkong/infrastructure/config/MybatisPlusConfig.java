@@ -47,11 +47,11 @@ public class MybatisPlusConfig {
 
             // 3. 告诉插件：哪些表不需要隔离？（白名单）
             // 答：比如 "sys_role", "sys_menu" 这种全局通用的表，不需要加 tenant_id
+            // 修改 MybatisPlusConfig.java 中的 ignoreTable 方法
             @Override
             public boolean ignoreTable(String tableName) {
-                // 暂时没有白名单，所有表都隔离。
-                // 如果以后有全局表，写在这里：return "sys_admin".equalsIgnoreCase(tableName);
-                return false;
+                // 【核心修改】如果是 sys_tenant 表，就不进行隔离（放行）
+                return "sys_tenant".equalsIgnoreCase(tableName);
             }
         });
 
